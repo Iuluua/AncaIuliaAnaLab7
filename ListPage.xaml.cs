@@ -33,6 +33,17 @@ public partial class ListPage : ContentPage
         await Navigation.PopAsync();
     }
 
+    async void OnDeleteItemClicked(object sender, EventArgs e)
+    {
+        var product = listView.SelectedItem as Product;
+        if (product != null)
+        {
+            await App.Database.DeleteProductAsync(product);
+            listView.ItemsSource = await App.Database.GetProductsAsync();
+        }
+    }
+
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
